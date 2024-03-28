@@ -5,7 +5,7 @@ const withToolbar = (toolbarConfig) => {
     return {
       ...nextConfig,
       webpack: (config, context) => {
-        if (context.dev && toolbarConfig.componentMapper && isDev) {
+        if (context.dev && toolbarConfig.componentMapper) {
           config.module.rules.push({
             test: /\.tsx?$/,
             use: {
