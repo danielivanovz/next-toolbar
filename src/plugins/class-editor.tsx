@@ -6,15 +6,14 @@ import { Label } from "@/components/ui/label";
 import React, { useState, useEffect } from "react";
 import { tailwindClasses } from "../../tailwind-hints";
 import { Icons } from "@/components/icons";
+import { BASE_CLASSES } from "@/lib/base-classes";
 
 interface ClassEditorProps {
   setEditorOpen: (isOpen: boolean) => void;
 }
 
-const BASE_CLASSES = ["class-editor", "class-inspector"];
-
 export const ClassEditor: React.FC<ClassEditorProps> = ({ setEditorOpen }) => {
-  const [value, setValue] = useState("");
+  const [className, setClassName] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [classStates, setClassStates] = useState<{
     [className: string]: boolean;
@@ -34,15 +33,13 @@ export const ClassEditor: React.FC<ClassEditorProps> = ({ setEditorOpen }) => {
   }, [selectedElement]);
 
   useEffect(() => {
-    if (value) {
-      const filteredSuggestions = tailwindClasses.filter((className) =>
-        className.startsWith(value)
-      );
+    if (className) {
+      const filteredSuggestions = tailwindClasses.filter((className) => className.startsWith(className));
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);
     }
-  }, [value]);
+  }, [className]);
 
   const toggleClass = (className: string) => {
     const newState = { ...classStates, [className]: !classStates[className] };
@@ -60,15 +57,24 @@ export const ClassEditor: React.FC<ClassEditorProps> = ({ setEditorOpen }) => {
   }
 
   return (
-    <div
-      data-inspectable="false"
-      className="flex flex-col space-y-5 justify-start items-start"
-    >
+    <div data-inspectable="false" className="flex flex-col space-y-5 justify-start items-start">
+      <Button
+        onClick={() => {
+          setClassStates({});
+          setEditorOpen(false);
+          if (typeof window !== "undefined" && selectedElement) {
+            window.location.reload();
+          }
+        }}
+        className="absolute top-0 right-0 m-2 h-8 rounded-sm transition-colors duration-500 ease-out-in"
+        variant="ghost"
+        size="icon"
+      >
+        <Icons.close />
+      </Button>
       <div className="space-y-0.5 p-1 flex flex-col">
         <Label className="text-sm text-white">Classes</Label>
-        <Label className="text-neutral-400 text-xs">
-          Select/deselect classes to apply to the selected element
-        </Label>
+        <Label className="text-neutral-400 text-xs">Select/deselect classes to apply to the selected element</Label>
       </div>
       <div className="justify-start space-y-1 px-4">
         {Object.entries(classStates)
@@ -93,8 +99,8 @@ export const ClassEditor: React.FC<ClassEditorProps> = ({ setEditorOpen }) => {
       <div className="flex flex-col space-y-2 w-full">
         <div className="flex items-center space-x-2 h-8">
           <Input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
             placeholder="Type a class"
             className="peer h-8 w-full bg-neutral-100/90 backdrop-blur-xl border-neutral-400/70 text-black text-xs tracking-wide font-sans rounded-sm"
             list="tailwind-classes"
@@ -106,9 +112,9 @@ export const ClassEditor: React.FC<ClassEditorProps> = ({ setEditorOpen }) => {
           </datalist>
           <Button
             onClick={() => {
-              selectedElement?.classList.add(value);
-              setClassStates({ ...classStates, [value]: true });
-              setValue("");
+              selectedElement?.classList.add(className);
+              setClassStates({ ...classStates, [className]: true });
+              setClassName("");
             }}
             className="peer h-8 bg-neutral-100/90 backdrop-blur-xl border-neutral-400/70 text-neutral-800 font-light text-base tracking-wide font-sans rounded-sm"
             variant="secondary"

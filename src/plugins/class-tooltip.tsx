@@ -1,3 +1,4 @@
+import { BASE_CLASSES } from "@/lib/base-classes";
 import { cn } from "@/lib/utils";
 
 type TWClassShowerProps = {
@@ -5,10 +6,9 @@ type TWClassShowerProps = {
   position: { x: number; y: number };
 };
 
-export const ClassTooltip: React.FC<TWClassShowerProps> = ({
-  content,
-  position,
-}) => {
+const SPACE = " ";
+
+export const ClassTooltip: React.FC<TWClassShowerProps> = ({ content, position }) => {
   if (!content) return null;
 
   let isCSR = Boolean(content) && Boolean(content.includes("csr-component"));
@@ -27,15 +27,14 @@ export const ClassTooltip: React.FC<TWClassShowerProps> = ({
       )}
     >
       {isCSR ? (
-        <div className="text-xs text-emerald-500">
-          This component is rendered on the client-side.
-        </div>
+        <div className="text-xs text-emerald-500">This component is rendered on the client-side.</div>
       ) : (
-        <div className="text-xs text-red-500">
-          This component is rendered on the server-side.
-        </div>
+        <div className="text-xs text-red-500">This component is rendered on the server-side.</div>
       )}
-      {content}
+      {content
+        .split(SPACE)
+        .filter((className) => BASE_CLASSES.indexOf(className) === -1)
+        .join(SPACE)}
     </div>
   );
 };

@@ -3,13 +3,7 @@ import { SVGProps } from "react";
 export const Icons = {
   arrow: ({ ...props }: SVGProps<SVGSVGElement>) => (
     // Solar Design System: https://www.figma.com/community/file/1166831539721848736
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -19,13 +13,7 @@ export const Icons = {
     </svg>
   ),
   copy: ({ ...props }: SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -35,13 +23,7 @@ export const Icons = {
     </svg>
   ),
   up: ({ ...props }: SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
         fill="none"
         stroke="currentColor"
@@ -50,6 +32,22 @@ export const Icons = {
         strokeWidth="1.5"
         d="m19 15l-7-6l-1.75 1.5M5 15l2.333-2"
       ></path>
+    </svg>
+  ),
+  close: ({ ...props }: SVGProps<SVGSVGElement>) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      className="lucide lucide-x"
+      {...props}
+    >
+      <path d="M18 6 6 18M6 6l12 12" />
     </svg>
   ),
 };
